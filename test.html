@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>API de Geolocalizacion con Compartir</title>
+    <title>API de Geolocalizacion</title>
     <style>
         body {
             font-family: sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #e0f7fa; /* Light Cyan */
+            color: #263238; /* Dark Blue Gray */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,19 +17,19 @@
         h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #555;
+            color: #00bcd4; /* Cyan */
         }
 
         #output {
             margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 15px;
+            border: 1px solid #b2ebf2; /* Light Cyan Accent */
             background-color: #fff;
             white-space: pre-wrap;
             text-align: center;
             width: 80%;
             max-width: 600px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             border-radius: 8px;
         }
 
@@ -37,34 +37,17 @@
             height: 400px;
             width: 80%;
             max-width: 800px;
-            border: 1px solid #ddd;
+            border: 1px solid #80deea; /* Cyan Accent */
             border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
-        }
-
-        #generateCodeButton, #connectButton {
-            padding: 12px 24px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-        }
-
-        #generateCodeButton:hover, #connectButton:hover {
-            background-color: #0056b3;
         }
 
         #recentLocations {
             margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #b2ebf2; /* Light Cyan Accent */
+            background-color: #f0f8f9; /* Very Light Cyan */
             border-radius: 8px;
             width: 80%;
             max-width: 600px;
@@ -72,7 +55,7 @@
 
         #recentLocations h3 {
             margin-top: 0;
-            color: #555;
+            color: #00acc1; /* Dark Cyan */
             text-align: center;
         }
 
@@ -82,36 +65,15 @@
         }
 
         #recentLocationsList li {
-            margin-bottom: 5px;
-        }
-
-        #connectionControls {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        #codeInput {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-
-        .leaflet-marker-shadow {
-            display: none !important;
+            margin-bottom: 8px;
+            color: #455a64; /* Blue Gray */
         }
 
         #nearbyLocations {
             margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #b2ebf2; /* Light Cyan Accent */
+            background-color: #f0f8f9; /* Very Light Cyan */
             border-radius: 8px;
             width: 80%;
             max-width: 600px;
@@ -119,7 +81,7 @@
 
         #nearbyLocations h3 {
             margin-top: 0;
-            color: #555;
+            color: #00acc1; /* Dark Cyan */
             text-align: center;
         }
 
@@ -129,22 +91,19 @@
         }
 
         #nearbyLocationsList li {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #455a64; /* Blue Gray */
+        }
+
+        .leaflet-marker-shadow {
+            display: none !important;
         }
     </style>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
-    <h2>API de Geolocalizacion con Compartir</h2>
+    <h2>API de Geolocalizacion</h2>
     <div id="output">Obteniendo ubicacion...</div>
-
-    <div id="connectionControls">
-        <h3>Compartir Ubicación</h3>
-        <button id="generateCodeButton">Generar Código</button>
-        <input type="text" id="codeInput" placeholder="Ingresar Código">
-        <button id="connectButton">Conectar</button>
-        <div id="connectionStatus"></div>
-    </div>
 
     <div id="recentLocations">
         <h3>Ubicaciones Recientes</h3>
@@ -226,17 +185,6 @@
                 updateRecentLocationsList();
                 lastUpdateTime = currentTimestamp;
 
-                fetch('/api/share-location', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 'Authorization': 'Bearer YOUR_AUTH_TOKEN'
-                    },
-                    body: JSON.stringify({ latitude: lat, longitude: lon }),
-                }).catch(error => {
-                    console.error('Error al compartir la ubicación:', error);
-                });
-
                 fetch(`/api/v1/locations-nearby?latitude=${lat}&longitude=${lon}&radius=5`)
                     .then(response => response.json())
                     .then(data => {
@@ -268,49 +216,6 @@
             document.getElementById("output").innerText = "Geolocalizacion no soportada.";
         }
 
-        document.getElementById('generateCodeButton').addEventListener('click', async function() {
-            try {
-                const response = await fetch('/api/generate-code', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // 'Authorization': 'Bearer YOUR_AUTH_TOKEN'
-                    }
-                });
-                const data = await response.json();
-                if (response.ok && data.code) {
-                    document.getElementById('output').innerText += "\n\nCódigo generado: " + data.code;
-                } else {
-                    document.getElementById('output').innerText += "\n\nError al generar el código.";
-                }
-            } catch (error) {
-                document.getElementById('output').innerText += "\n\nError al comunicarse con el servidor.";
-            }
-        });
-
-        document.getElementById('connectButton').addEventListener('click', async function() {
-            const codeToConnect = document.getElementById('codeInput').value;
-            if (codeToConnect) {
-                document.getElementById('connectionStatus').innerText = `Intentando conectar con el código: ${codeToConnect}...`;
-                try {
-                    const response = await fetch('/api/connect', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            // 'Authorization': 'Bearer YOUR_AUTH_TOKEN'
-                        },
-                        body: JSON.stringify({ code: codeToConnect })
-                    });
-                    const data = await response.json();
-                    document.getElementById('connectionStatus').innerText = data.message || (response.ok ? 'Conexión exitosa' : 'Error al conectar');
-                } catch (error) {
-                    document.getElementById('connectionStatus').innerText = 'Error al comunicarse con el servidor.';
-                }
-            } else {
-                alert('Por favor, ingresa un código para conectar.');
-            }
-        });
-
         window.addEventListener('beforeunload', function() {
             if (navigator.geolocation && watchId) {
                 navigator.geolocation.clearWatch(watchId);
@@ -319,3 +224,4 @@
     </script>
 </body>
 </html>
+
