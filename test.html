@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Probando API de Geolocalización</title>
+</head>
+<body>
+    <h2>Probando API de Geolocalizacion</h2>
+    <div id="output">Obteniendo ubicación...</div>
+
+    <script>
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(async function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+
+                document.getElementById("output").innerText = "Tu ubicación: " + lat + ", " + lon;
+
+                try {
+                    const res = await fetch(`/api/v1/locations-nearby?latitude=${lat}&longitude=${lon}&radius=5`);
+                    const data = await res.json();
+                    document.getElementById("output").innerText += "\n\nResultados:\n" + JSON.stringify(data, null, 2);
+                } catch (err) {
+                    document.getElementById("output").innerText += "\n\nError: " + err.message;
+                }
+            }, function(error) {
+                document.getElementById("output").innerText = "Error obteniendo ubicación: " + error.message;
+            });
+        } else {
+            document.getElementById("output").innerText = "Geolocalización no soportada.";
+        }
+    </script>
+</body>
+</html>
