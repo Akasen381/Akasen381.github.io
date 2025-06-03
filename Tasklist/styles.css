@@ -1,0 +1,111 @@
+:root {
+  --primary: #A5C882;
+  --secondary: #D33F49;
+  --light: #ffffff;
+  --dark: #000000;
+  --disabled: #e7e7e7;
+}
+
+body {
+  margin: 0;
+  font-family: 'Lato', sans-serif;
+  background-color: var(--disabled);
+}
+
+.container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: var(--light);
+  border-radius: 8px;
+}
+
+.date-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.large-text {
+  font-size: 3rem;
+}
+
+.small-text {
+  font-size: 1.2rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.task-form {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 50px auto;
+  gap: 10px;
+}
+
+.task-form input {
+  padding: 10px;
+  border: none;
+  background-color: var(--disabled);
+  border-radius: 5px;
+}
+
+.task-form input:focus {
+  outline: 2px solid var(--primary);
+}
+
+.task-form button {
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.task-form button[type="submit"] {
+  background-color: var(--disabled);
+  font-size: 24px;
+  border-radius: 50%;
+}
+
+#sort-tasks {
+  background-color: var(--secondary);
+  color: var(--light);
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.task {
+  background-color: var(--primary);
+  color: var(--light);
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.task:hover {
+  opacity: 0.9;
+}
+
+.task.done {
+  background-color: var(--disabled);
+  color: var(--dark);
+  text-decoration: line-through;
+}

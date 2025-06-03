@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lista de Tareas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="task-app container">
+    <header class="date-info">
+      <div class="date-left">
+        <div id="day-number" class="bold large-text"></div>
+        <div>
+          <div id="month-name" class="bold small-text"></div>
+          <div id="year-number" class="bold small-text"></div>
+        </div>
+      </div>
+      <div id="day-name" class="bold uppercase small-text"></div>
+    </header>
+
+    <form id="task-form" class="task-form" autocomplete="off">
+      <input type="text" id="task-input" placeholder="Nueva tarea" required />
+      <button type="submit" title="Agregar tarea">+</button>
+      <button type="button" id="sort-tasks" title="Ordenar tareas">Ordenar</button>
+    </form>
+
+    <section id="task-list" class="task-list"></section>
+  </main>
+</body>
+</html>
